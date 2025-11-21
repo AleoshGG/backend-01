@@ -37,12 +37,12 @@ jobs:
       # Build image
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/nestjs-greeting:latest .
+          docker build -t ghcr.io/${{ secrets.REGISTRY_USER }}/nestjs-greeting:latest .
 
       # Push image
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/nestjs-greeting:latest
+          docker push ghcr.io/${{ secrets.REGISTRY_USER }}/nestjs-greeting:latest
 
   deploy:
     needs: build
@@ -57,7 +57,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "Pulling new image..."
-            sudo docker pull ghcr.io/${{ github.repository_owner }}/nestjs-greeting:latest
+            sudo docker pull ghcr.io/${{ secrets.REGISTRY_USER }}/nestjs-greeting:latest
 
             echo "Stopping old container..."
             sudo docker stop nestjs-greeting || true
@@ -68,6 +68,6 @@ jobs:
               --name nestjs-greeting \
               -p 8080:8080 \
               --restart=always \
-              ghcr.io/${{ github.repository_owner }}/nestjs-greeting:latest
+              ghcr.io/${{ secrets.REGISTRY_USER }}/nestjs-greeting:latest
 
             echo "Deployment done!"
