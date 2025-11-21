@@ -13,7 +13,7 @@ async function bootstrap() {
     app.useGlobalFilters(new HttpExceptionFilter());
 
     const port = 8080;
-    await app.listen(port);
+    await app.listen(port, '0.0.0.0');
     logger.log(`Web server is running on http://localhost:${port}`);
   } catch (error) {
     logger.error('Error starting web server', error);
