@@ -6,7 +6,7 @@ import { IGreetingRepository } from 'src/greetings/domain/repositories/IGreeting
 export class GreetingRepositoryAdapter implements IGreetingRepository {
   async greet(): Promise<Greeting> {
     return {
-      greeting: 'Hello world with NestJs',
+      greeting: 'Hello world in API 1 with NestJs',
     };
   }
 }
